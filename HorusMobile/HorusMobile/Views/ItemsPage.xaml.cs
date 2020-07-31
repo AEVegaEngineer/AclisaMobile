@@ -42,7 +42,7 @@ namespace HorusMobile.Views
 
             // Marcando como leída la notificación
             HttpClient client = new HttpClient();
-            var token = new token { jwt = App.Current.Properties["_json_token"].ToString(), id = item.id_cuerpo };
+            var token = new token { jwt = App.Current.Properties["_json_token"].ToString(), nombreUsuario = item.id_cuerpo };
             var myContent = JsonConvert.SerializeObject(token);
             var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);

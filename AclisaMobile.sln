@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorusMobile.Android", "HorusMobile\HorusMobile.Android\HorusMobile.Android.csproj", "{E72112EB-5A18-48B5-A299-35A6ED9D2E3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AclisaMobile.Android", "HorusMobile\HorusMobile.Android\AclisaMobile.Android.csproj", "{E72112EB-5A18-48B5-A299-35A6ED9D2E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorusMobile.iOS", "HorusMobile\HorusMobile.iOS\HorusMobile.iOS.csproj", "{20F52BF4-63F9-4323-96D2-3D7F28E4EE18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AclisaMobile.iOS", "HorusMobile\HorusMobile.iOS\AclisaMobile.iOS.csproj", "{20F52BF4-63F9-4323-96D2-3D7F28E4EE18}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HorusMobile", "HorusMobile\HorusMobile\HorusMobile.csproj", "{CC2F16F9-4996-413C-A5B4-44155370336E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AclisaMobile", "HorusMobile\HorusMobile\AclisaMobile.csproj", "{CC2F16F9-4996-413C-A5B4-44155370336E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneSignalNotificationServiceExtension", "OneSignalNotificationServiceExtension\OneSignalNotificationServiceExtension.csproj", "{7922638D-7CCD-427D-B345-ADF6CC76E666}"
 EndProject

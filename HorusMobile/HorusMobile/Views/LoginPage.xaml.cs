@@ -2,7 +2,9 @@
 using HorusMobile.Services;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 /*
 using System.ComponentModel;
 using HorusMobile.Views;
@@ -108,7 +110,7 @@ namespace HorusMobile.Views
             {
                 //envío el request por POST
                 Debug.WriteLine("*************** antes de postasync ****************");
-                result = await client.PostAsync("http://colegiomedico.i-tic.com/horus/apirest/usuarios/login.php", byteContent);
+                result = await client.PostAsync("http://66.97.39.24:8044/login", byteContent);
                 Debug.WriteLine("*************** postasync ****************");
             }
             catch (Exception exception)
@@ -119,6 +121,8 @@ namespace HorusMobile.Views
             if (result != null)
             {
                 var contents = await result.Content.ReadAsStringAsync();
+                string token = result.Headers.Contains("Authorization") ? result.Headers.GetValues("Authorization").First() : null;
+                //var token = result.Headers.GetValues("Authorization").FirstOrDefault();
                 //reviso si se ha hecho una conexión correcta con el servidor
                 if (!IsValidJson(contents))
                 {
@@ -130,13 +134,30 @@ namespace HorusMobile.Views
                     btnLogin.BackgroundColor = Color.Cyan;
                     return;
                 }
-
-                //Deserializo el JSON resultante para obtener los datos del token de sesión
+                if (token == null)
+                {
+                    await DisplayAlert("Error", "No autorizado", "OK");
+                    IndicadorActividad.IsRunning = false;
+                    IndicadorActividad.IsEnabled = false;
+                    IndicadorActividad.IsVisible = false;
+                    btnLogin.IsEnabled = true;
+                    btnLogin.BackgroundColor = Color.Cyan;
+                    return;
+                }
+                
+                // ha retornado un json, no necesariamente correcto                
                 token tk = JsonConvert.DeserializeObject<token>(contents);
+                
+                //Deserializo el JSON resultante para obtener los datos           
+
+
+
+
+                //tk.jwt = token;
                 //Token tk = new Token(contents["id"], contents["jwt"], contents["message"]);
 
-
                 //Quita el activity indicator para el login
+                /*
                 PBIndicator = !PBIndicator;
                 IsBusy = false;
                 IndicadorActividad.IsRunning = false;
@@ -144,31 +165,29 @@ namespace HorusMobile.Views
                 IndicadorActividad.IsVisible = false;
                 btnLogin.IsEnabled = true;
                 btnLogin.BackgroundColor = Color.Cyan;
-
-                if (tk.message == "FAIL")
+                */
+                if (tk.message == "Unauthorized")
                 {
                     await DisplayAlert("Login", "Usuario o pass incorrecto", "OK");
-                }
-                else if (tk.message == null)
-                {
-                    ErrorEnConexion(130);
                 }
                 else
                 {
                     try
                     {
+                        Debug.WriteLine(contents);
+                        Debug.WriteLine(token);
                         //seteo el id del usuario en la app, para postearla al appcenter
-                        var usr_id = tk.id;
+                        var usr_id = tk.nombreUsuario;
                         //seteo el token de la  app para persistirlo
-                        Application.Current.Properties["_user_id"] = tk.id;
+                        Application.Current.Properties["_user_id"] = tk.nombreUsuario;
                         Application.Current.Properties["_json_token"] = tk.jwt;
 
                         //Muestro la página principal
                         iml.ShowMainPage();
-                        /*
-                        await Navigation.PushModalAsync(new MainPage());
-                        await Navigation.PopAsync();
-                        */
+                        
+                        //await Navigation.PushModalAsync(new MainPage());
+                        //await Navigation.PopAsync();
+                        
                     }
                     catch (Exception ex)
                     {
@@ -176,7 +195,7 @@ namespace HorusMobile.Views
                         await DisplayAlert("Error en Login", ex.ToString(), "OK");
                     }
                 }
-
+                
             }
             else
             {
@@ -205,7 +224,7 @@ namespace HorusMobile.Views
         private async void ErrorEnConexion(int line)
         {
             Debug.WriteLine("\n\nRESULT NULL ERROR IN LINE " + line + "\n\n");
-            await DisplayAlert("Error de red", "No se ha logrado hacer conexión con http://colegiomedico.i-tic.com, revise su conexión o hable con el administrador de la red.", "OK");
+            await DisplayAlert("Error de red", "No se ha logrado hacer conexión con los servidores de Aclisa, revise su conexión o hable con el administrador de la red.", "OK");
         }
     }
 }

@@ -9,7 +9,9 @@ namespace HorusMobile.Models
     [Preserve(AllMembers = true)]
     public class token
     {
-        public string id { get; set; }
+        public bool estado { get; set; }
+        public string nombreUsuario{ get; set; }
+        public string[] permisos { get; set; }
         public string jwt { get; set; }
         public string message { get; set; }
     }

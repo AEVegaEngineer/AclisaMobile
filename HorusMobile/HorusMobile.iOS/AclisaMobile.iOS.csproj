@@ -150,9 +150,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\HorusMobile\HorusMobile.csproj">
-      <Project>{8AE07D42-9C3A-4EE5-9B8B-4EA695FDB829}</Project>
-      <Name>HorusMobile</Name>
+    <ProjectReference Include="..\HorusMobile\AclisaMobile.csproj">
+      <Project>{CC2F16F9-4996-413C-A5B4-44155370336E}</Project>
+      <Name>AclisaMobile</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -20,10 +20,12 @@ namespace HorusMobile
             DependencyService.Register<NotifDataStore>();
             //MainPage = new MainPage();
             var isLoggedIn = "false";
+            /*
             if (Application.Current.Properties.ContainsKey("_json_token"))
             {
                 isLoggedIn = Application.Current.Properties["_json_token"].ToString();
             }
+            */
             if(isLoggedIn == "false")
                 MainPage = new LoginPage(this);            
             else
