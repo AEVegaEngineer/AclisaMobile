@@ -23,7 +23,7 @@ namespace HorusMobile.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-            OneSignal.Current.StartInit("5bd931bc-a426-44ec-85a5-bfd47a771213")
+            OneSignal.Current.StartInit("c8afd692-7b1f-4d7a-98eb-60a1eb5b4070")
                   .EndInit();
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

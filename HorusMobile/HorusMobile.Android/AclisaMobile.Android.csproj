@@ -135,10 +135,10 @@
     <AndroidResource Include="Resources\eventually.mp3" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_onesignal_large_icon_default.png" />
+    <AndroidResource Include="Resources\drawable\ic_onesignal_large_icon_default_colegio.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_stat_onesignal_default.png" />
+    <AndroidResource Include="Resources\drawable\ic_stat_onesignal_default_colegio.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\aclisa_light_logo.png" />
@@ -148,6 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\aclisa_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_stat_onesignal_default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_onesignal_large_icon_default.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
