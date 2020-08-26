@@ -42,12 +42,15 @@ namespace HorusMobile.Views
 
             // Marcando como leída la notificación
             HttpClient client = new HttpClient();
+            /*
             var token = new token { jwt = App.Current.Properties["_json_token"].ToString(), nombreUsuario = item.id_cuerpo };
             var myContent = JsonConvert.SerializeObject(token);
-            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            */
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Current.Properties["_json_token"].ToString());
+            var buffer = System.Text.Encoding.UTF8.GetBytes("");
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var result = client.PostAsync("http://colegiomedico.i-tic.com/horus/apirest/notifications/mark.php", byteContent).Result;
+            var result = client.PutAsync("http://66.97.39.24:8044/mensajes/msjCuerpo/changeEstado/"+ item.id_cuerpo + "/true", byteContent).Result;
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)

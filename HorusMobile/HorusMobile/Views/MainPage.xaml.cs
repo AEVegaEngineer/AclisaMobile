@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using HorusMobile.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace HorusMobile.Views
 {
@@ -21,7 +22,7 @@ namespace HorusMobile.Views
 
             //MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
             
-            var usr_id = Application.Current.Properties["_user_id"];
+            //var usr_id = Application.Current.Properties["_user_id"];
             
         }
 
@@ -42,14 +43,10 @@ namespace HorusMobile.Views
                         */
                     case (int)MenuItemType.Logout:
                         HttpClient client = new HttpClient();
-                        Users usuario = new Users();
-                        usuario.deviceId = App.Current.getCurrentDeviceId();
-                        usuario.id = Application.Current.Properties["_user_id"].ToString();
-                        var myContent = JsonConvert.SerializeObject(usuario);
-                        var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
-                        var byteContent = new ByteArrayContent(buffer);
-                        byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                        var result = await client.PostAsync("http://colegiomedico.i-tic.com/horus/apirest/usuarios/logout.php", byteContent);
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Current.Properties["_json_token"].ToString());
+                        
+                        //string deviceid = "{\"deviceId\": \"" +  + "\", \"deviceName\" : \" \"}";
+                        var result = await client.DeleteAsync("http://66.97.39.24:8044/mensajes/device/delete/mine/"+ App.Current.getCurrentDeviceId().ToString());
                         App.Current.Logout();
                         break;
                 }

@@ -40,7 +40,7 @@ namespace HorusMobile.Views
             string user = App.Current.Properties["_user_login"].ToString();
             string pass = App.Current.Properties["_user_pass"].ToString();
             //http://192.168.50.98/intermedio/funciones/
-            await Browser.OpenAsync("http://colegiomedico.i-tic.com/horus/funciones/login_app.php?usuario=" + user + "&pass=" + pass, BrowserLaunchMode.SystemPreferred);
+            await Browser.OpenAsync("http://www.google.com", BrowserLaunchMode.SystemPreferred);
         }
     }
 }

@@ -80,9 +80,11 @@ namespace HorusMobile.Services
 
             //establezco el tipo de contenido a JSON para que la api la reconozca
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Current.Properties["_json_token"].ToString());
             //http://192.168.50.98/intermedio
             //envío el request por POST
-            var result = client.PostAsync("http://colegiomedico.i-tic.com/horus/apirest/notifications/get.php", byteContent).Result;
+            var result = client.GetAsync("http://66.97.39.24:8044/mensajes/msjCuerpo/getAllByUserDestino").Result;
 
             if (result != null)
             {
@@ -97,15 +99,26 @@ namespace HorusMobile.Services
                 }
 
                 //Deserializo el JSON resultante para obtener los datos del usuario
+                JObject json = JObject.Parse(contents);
+                /*
+                json = (JObject)json.GetValue("Respuesta");
+                json = (JObject)json.GetValue("data");
+                json = (JObject)json.GetValue("msjCuerpos");
+                */
+                //json = (JObject)json["Respuesta"]["data"]["msjCuerpos"];
+                Debug.WriteLine("********NOTIFICACIONES*******");
+                Debug.WriteLine(json["Respuesta"]["data"]["msjCuerpos"]);
 
-                var j = JArray.Parse(contents);
+                var j = JArray.Parse(json["Respuesta"]["data"]["msjCuerpos"].ToString());
+                //var notificaciones = j;
                 List<Item> itemsRetornados = new List<Item>() { };
                 foreach (var notif in j)
                 {
                     var Notif = JsonConvert.DeserializeObject<Notificaciones>(notif.ToString());
-                    if (Notif.id_cuerpo == null)
+                    if (Notif.id == null)
                     {
-                        await DisplayAlert("Error", "ERROR " + Notif.message + "\n" + Notif.error, "OK");                        
+                        //await DisplayAlert("Error", "ERROR " + Notif.message + "\n" + Notif.error, "OK");                        
+                        Debug.WriteLine("******** ERROR MOSTRANDO NOTIFICACION *******");
                     }
                     else
                     {
@@ -113,8 +126,8 @@ namespace HorusMobile.Services
                         {
                             Text = Notif.asunto,
                             Description = Notif.mensaje,
-                            id_cuerpo = Notif.id_cuerpo,
-                            estado = int.Parse(Notif.estado)
+                            id_cuerpo = Notif.id,
+                            estado = Notif.estado ? 1 : 0 //int.Parse(Notif.estado);
                         };
                         itemsRetornados.Add(objeto);
                     }
@@ -126,7 +139,8 @@ namespace HorusMobile.Services
             else
             {
                 List<Item> itemsRetornados = new List<Item>() { };
-                await DisplayAlert("Error", "RESULT NULL ERROR AT NOTIFDATASTORE.GETNOTIFASYNC", "OK");
+                //await DisplayAlert("Error", "RESULT NULL ERROR AT NOTIFDATASTORE.GETNOTIFASYNC", "OK");
+                Debug.WriteLine("********RESULT NULL ERROR AT NOTIFDATASTORE.GETNOTIFASYNC*******");
                 return await Task.FromResult(itemsRetornados);
             }
         }

@@ -10,7 +10,7 @@ using Com.OneSignal;
 
 namespace HorusMobile.Droid
 {
-    [Activity(Label = "HorusMobile", Icon = "@drawable/cmsj_formateado_full", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "AclisaMobile", Icon = "@drawable/ic_onesignal_large_icon_default", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

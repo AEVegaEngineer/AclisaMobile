@@ -46,7 +46,7 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>http://colegiomedico.i-tic.com</key>
+			<key>http://www.google.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
 				<true/>

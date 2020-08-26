@@ -90,7 +90,7 @@ namespace HorusMobile.Views
             //Usuario usuario = new Usuario(user,pass, App.Current.getCurrentDeviceId());
             usuario.password = pass;
             usuario.username = user;
-            usuario.deviceId = App.Current.getCurrentDeviceId();
+            //usuario.deviceId = App.Current.getCurrentDeviceId();
             Application.Current.Properties["_user_login"] = user;
             Application.Current.Properties["_user_pass"] = pass;
             Application.Current.Properties["_device_id"] = App.Current.getCurrentDeviceId();
@@ -124,48 +124,11 @@ namespace HorusMobile.Views
                 string token = result.Headers.Contains("Authorization") ? result.Headers.GetValues("Authorization").First() : null;
                 //var token = result.Headers.GetValues("Authorization").FirstOrDefault();
                 //reviso si se ha hecho una conexión correcta con el servidor
-                if (!IsValidJson(contents))
-                {
-                    await DisplayAlert("Error", "No se ha obtenido respuesta del servidor, revise su conexión a internet y vuelva a intentarlo.", "OK");
-                    IndicadorActividad.IsRunning = false;
-                    IndicadorActividad.IsEnabled = false;
-                    IndicadorActividad.IsVisible = false;
-                    btnLogin.IsEnabled = true;
-                    btnLogin.BackgroundColor = Color.Cyan;
-                    return;
-                }
-                if (token == null)
-                {
-                    await DisplayAlert("Error", "No autorizado", "OK");
-                    IndicadorActividad.IsRunning = false;
-                    IndicadorActividad.IsEnabled = false;
-                    IndicadorActividad.IsVisible = false;
-                    btnLogin.IsEnabled = true;
-                    btnLogin.BackgroundColor = Color.Cyan;
-                    return;
-                }
-                
+                validoRespuestaServer(contents, token);
+
                 // ha retornado un json, no necesariamente correcto                
                 token tk = JsonConvert.DeserializeObject<token>(contents);
                 
-                //Deserializo el JSON resultante para obtener los datos           
-
-
-
-
-                //tk.jwt = token;
-                //Token tk = new Token(contents["id"], contents["jwt"], contents["message"]);
-
-                //Quita el activity indicator para el login
-                /*
-                PBIndicator = !PBIndicator;
-                IsBusy = false;
-                IndicadorActividad.IsRunning = false;
-                IndicadorActividad.IsEnabled = false;
-                IndicadorActividad.IsVisible = false;
-                btnLogin.IsEnabled = true;
-                btnLogin.BackgroundColor = Color.Cyan;
-                */
                 if (tk.message == "Unauthorized")
                 {
                     await DisplayAlert("Login", "Usuario o pass incorrecto", "OK");
@@ -174,13 +137,33 @@ namespace HorusMobile.Views
                 {
                     try
                     {
-                        Debug.WriteLine(contents);
+                        //finalmente todo esta OK, voy a registrar el deviceid
+                        Debug.WriteLine("Se registra el token:");
                         Debug.WriteLine(token);
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                        string deviceid = "{\"deviceId\": \"" + App.Current.getCurrentDeviceId() + "\", \"deviceName\" : \" \"}";
+                        var bufferdeviceid = System.Text.Encoding.UTF8.GetBytes(deviceid);
+                        var byteContentdeviceid = new ByteArrayContent(bufferdeviceid);
+                        //establezco el tipo de contenido a JSON para que la api la reconozca
+                        byteContentdeviceid.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                        result = await client.PostAsync("http://66.97.39.24:8044/mensajes/device/insert/mine", byteContentdeviceid);
+                        if (result != null)
+                        {
+                            var contenido = await result.Content.ReadAsStringAsync();
+                            Debug.WriteLine("Se obtiene la respuesta del registro de dispositivo:");
+                            Debug.WriteLine(contenido);
+                            validoRespuestaServer(contenido, token);
+                        }
+                        else
+                        {
+                            ErrorEnConexion(157);
+                        }
+                        
                         //seteo el id del usuario en la app, para postearla al appcenter
-                        var usr_id = tk.nombreUsuario;
+                        //var usr_id = tk.nombreUsuario;
                         //seteo el token de la  app para persistirlo
-                        Application.Current.Properties["_user_id"] = tk.nombreUsuario;
-                        Application.Current.Properties["_json_token"] = tk.jwt;
+                        
+                        Application.Current.Properties["_json_token"] = token;
 
                         //Muestro la página principal
                         iml.ShowMainPage();
@@ -199,7 +182,7 @@ namespace HorusMobile.Views
             }
             else
             {
-                ErrorEnConexion(159);
+                ErrorEnConexion(183);
             }
 
             IndicadorActividad.IsRunning = false;
@@ -225,6 +208,29 @@ namespace HorusMobile.Views
         {
             Debug.WriteLine("\n\nRESULT NULL ERROR IN LINE " + line + "\n\n");
             await DisplayAlert("Error de red", "No se ha logrado hacer conexión con los servidores de Aclisa, revise su conexión o hable con el administrador de la red.", "OK");
+        }
+        private async void validoRespuestaServer(string contents, string token)
+        {
+            if (!IsValidJson(contents))
+            {
+                await DisplayAlert("Error", "No se ha obtenido respuesta del servidor, revise su conexión a internet y vuelva a intentarlo.", "OK");
+                IndicadorActividad.IsRunning = false;
+                IndicadorActividad.IsEnabled = false;
+                IndicadorActividad.IsVisible = false;
+                btnLogin.IsEnabled = true;
+                btnLogin.BackgroundColor = Color.Cyan;
+                return;
+            }
+            if (token == null)
+            {
+                await DisplayAlert("Error", "No autorizado", "OK");
+                IndicadorActividad.IsRunning = false;
+                IndicadorActividad.IsEnabled = false;
+                IndicadorActividad.IsVisible = false;
+                btnLogin.IsEnabled = true;
+                btnLogin.BackgroundColor = Color.Cyan;
+                return;
+            }
         }
     }
 }
