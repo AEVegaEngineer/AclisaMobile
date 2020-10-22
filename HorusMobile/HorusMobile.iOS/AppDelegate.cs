@@ -24,7 +24,7 @@ namespace HorusMobile.iOS
             //FFImageLoading
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             LoadApplication(new App());
-            OneSignal.Current.StartInit("5bd931bc-a426-44ec-85a5-bfd47a771213")
+            OneSignal.Current.StartInit("993f8a4c-6deb-4921-b105-8f4ed5e72540")
                   .EndInit();
 
             return base.FinishedLaunching(app, options);

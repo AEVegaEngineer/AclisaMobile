@@ -11,6 +11,9 @@ namespace HorusMobile.Models
         public string Description { get; set; }
         public string id_cuerpo { get; set; }
         public int estado { get; set; }
-
+        public string Link { get; set; }
+        public string FechaEnviado { get; set; }
+        public string TituloFormateado { get; set; }
+        
     }
 }

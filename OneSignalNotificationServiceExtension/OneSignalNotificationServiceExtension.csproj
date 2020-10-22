@@ -83,6 +83,12 @@
     <MtouchTlsProvider>Default</MtouchTlsProvider>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Com.OneSignal, Version=3.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Com.OneSignal.3.8.1\lib\Xamarin.iOS10\Com.OneSignal.dll</HintPath>
+    </Reference>
+    <Reference Include="Com.OneSignal.Abstractions, Version=3.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Com.OneSignal.3.8.1\lib\Xamarin.iOS10\Com.OneSignal.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="FFImageLoading, Version=2.4.11.982, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.FFImageLoading.2.4.11.982\lib\Xamarin.iOS10\FFImageLoading.dll</HintPath>
     </Reference>
@@ -94,6 +100,9 @@
     </Reference>
     <Reference Include="FFImageLoading.Platform, Version=2.4.11.982, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.FFImageLoading.2.4.11.982\lib\Xamarin.iOS10\FFImageLoading.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="OneSignal.iOS.Binding, Version=3.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Com.OneSignal.3.8.1\lib\Xamarin.iOS10\OneSignal.iOS.Binding.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.IO.Compression" />

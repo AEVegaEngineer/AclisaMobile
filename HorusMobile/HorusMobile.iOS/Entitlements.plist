@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>com.colegiodemedicos.horusmobile</string>
+		<string>group.com.aclisa.AclisaMobile.onesignal</string>
 	</array>
 </dict>
 </plist>

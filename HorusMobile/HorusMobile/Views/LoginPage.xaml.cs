@@ -142,35 +142,45 @@ namespace HorusMobile.Views
                         Debug.WriteLine(token);
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                         string deviceid = "{\"deviceId\": \"" + App.Current.getCurrentDeviceId() + "\", \"deviceName\" : \" \"}";
+                        Debug.WriteLine("Se registra el deviceid:");
+                        Debug.WriteLine(deviceid);
+                        
                         var bufferdeviceid = System.Text.Encoding.UTF8.GetBytes(deviceid);
                         var byteContentdeviceid = new ByteArrayContent(bufferdeviceid);
                         //establezco el tipo de contenido a JSON para que la api la reconozca
                         byteContentdeviceid.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                         result = await client.PostAsync("http://66.97.39.24:8044/mensajes/device/insert/mine", byteContentdeviceid);
+                        var autenticado = false;
                         if (result != null)
                         {
                             var contenido = await result.Content.ReadAsStringAsync();
                             Debug.WriteLine("Se obtiene la respuesta del registro de dispositivo:");
                             Debug.WriteLine(contenido);
-                            validoRespuestaServer(contenido, token);
+                            if (contenido.Contains("\"resultado\":true"))
+                                autenticado = true;
+                            if(contenido.Contains("La inserción produjo un error"))
+                                ErrorInterno(159);
                         }
                         else
                         {
                             ErrorEnConexion(157);
                         }
-                        
+
                         //seteo el id del usuario en la app, para postearla al appcenter
                         //var usr_id = tk.nombreUsuario;
                         //seteo el token de la  app para persistirlo
-                        
-                        Application.Current.Properties["_json_token"] = token;
+                        if(autenticado)
+                        {
+                            Application.Current.Properties["_json_token"] = token;
+                            Debug.WriteLine("_json_token = " + token);
+                            //Muestro la página principal
+                            iml.ShowMainPage();
 
-                        //Muestro la página principal
-                        iml.ShowMainPage();
-                        
-                        //await Navigation.PushModalAsync(new MainPage());
-                        //await Navigation.PopAsync();
-                        
+                            //await Navigation.PushModalAsync(new MainPage());
+                            //await Navigation.PopAsync();
+                        }
+
+
                     }
                     catch (Exception ex)
                     {
@@ -209,17 +219,21 @@ namespace HorusMobile.Views
             Debug.WriteLine("\n\nRESULT NULL ERROR IN LINE " + line + "\n\n");
             await DisplayAlert("Error de red", "No se ha logrado hacer conexión con los servidores de Aclisa, revise su conexión o hable con el administrador de la red.", "OK");
         }
+        private async void ErrorInterno(int line)
+        {
+            Debug.WriteLine("\n\nINTERNAL SERVER ERROR IN LINE " + line + "\n\n");
+            await DisplayAlert("Error", "Ha ocurrido un error, por favor intente de nuevo, si el problema continúa contacte a soporte.", "OK");
+        }
         private async void validoRespuestaServer(string contents, string token)
         {
             if (!IsValidJson(contents))
             {
-                await DisplayAlert("Error", "No se ha obtenido respuesta del servidor, revise su conexión a internet y vuelva a intentarlo.", "OK");
+                ErrorEnConexion(222);
                 IndicadorActividad.IsRunning = false;
                 IndicadorActividad.IsEnabled = false;
                 IndicadorActividad.IsVisible = false;
                 btnLogin.IsEnabled = true;
                 btnLogin.BackgroundColor = Color.Cyan;
-                return;
             }
             if (token == null)
             {
@@ -229,8 +243,8 @@ namespace HorusMobile.Views
                 IndicadorActividad.IsVisible = false;
                 btnLogin.IsEnabled = true;
                 btnLogin.BackgroundColor = Color.Cyan;
-                return;
             }
+            return;
         }
     }
 }

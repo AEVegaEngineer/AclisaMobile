@@ -24,7 +24,7 @@
     </ContentPage.ToolbarItems>
     
     <StackLayout>
-        <Label Text="Notificaciones Nuevas" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Padding="10" />
+        <Label Text="Notificaciones Nuevas" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Padding="10" FontSize="20" FontAttributes="Bold" TextColor="#00acc1"/>
         <ListView x:Name="ItemsListView"
                 ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"
@@ -38,25 +38,27 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="10">
-                            <Label Text="{Binding Text}" 
+                            <Label Text="{Binding TituloFormateado}" 
                                 x:Name="Titulo"
                                 d:Text="{Binding .}"
                                 LineBreakMode="NoWrap" 
                                 Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
+                                FontSize="18" 
+                                TextColor="#4B4B4B"/>
                             <Label Text="{Binding Description}" 
                                 x:Name="Descripcion"
                                 d:Text="Item descripton"
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
-                                FontSize="13" />
+                                FontSize="16" 
+                                TextColor="#4B4B4B"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
             
         </ListView>
-        <Label Text="Notificaciones Leídas" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" />
+        <Label Text="Notificaciones Leídas" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"  FontSize="20" FontAttributes="Bold" TextColor="#00acc1" />
         <ListView x:Name="ReadItemsListView"
                 ItemsSource="{Binding ReadItems}"
                 VerticalOptions="FillAndExpand"
@@ -70,18 +72,20 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="10">
-                            <Label Text="{Binding Text}" 
+                            <Label Text="{Binding TituloFormateado}" 
                                 x:Name="Titulo"
                                 d:Text="{Binding .}"
                                 LineBreakMode="NoWrap" 
                                 Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
+                                FontSize="18" 
+                                TextColor="#4B4B4B"/>
                             <Label Text="{Binding Description}" 
                                 x:Name="Descripcion"
                                 d:Text="Item descripton"
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
-                                FontSize="13" />
+                                FontSize="16" 
+                                TextColor="#4B4B4B"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

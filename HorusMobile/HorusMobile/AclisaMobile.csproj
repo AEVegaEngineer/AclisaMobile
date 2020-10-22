@@ -6,8 +6,8 @@
     <ApplicationIcon>xamarin_logo.ico</ApplicationIcon>
     <Version>1.0.2</Version>
     <Authors>Andrés Vega</Authors>
-    <Company>Colegio de Médicos de San Juan</Company>
-    <Description>App para el manejo interno del Colegio de Médicos de San Juan</Description>
+    <Company>ACLISA</Company>
+    <Description>App para el manejo interno de Aclisa</Description>
     <PackageReleaseNotes>Correcciones en autenticación</PackageReleaseNotes>
   </PropertyGroup>
 

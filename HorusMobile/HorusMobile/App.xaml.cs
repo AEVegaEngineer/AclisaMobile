@@ -20,16 +20,21 @@ namespace HorusMobile
             DependencyService.Register<NotifDataStore>();
             //MainPage = new MainPage();
             var isLoggedIn = "false";
-            /*
+            
             if (Application.Current.Properties.ContainsKey("_json_token"))
             {
                 isLoggedIn = Application.Current.Properties["_json_token"].ToString();
             }
-            */
-            if(isLoggedIn == "false")
-                MainPage = new LoginPage(this);            
+            
+            if(isLoggedIn == "false") {
+                System.Diagnostics.Debug.WriteLine("No esta logeado");
+                MainPage = new LoginPage(this);
+            }
             else
+            {
+                System.Diagnostics.Debug.WriteLine("Esta logeado");
                 MainPage = new MainPage();
+            }
             OneSignal.Current.StartInit("c8afd692-7b1f-4d7a-98eb-60a1eb5b4070")
                   .EndInit();
             ShowPlayerIdHandler();

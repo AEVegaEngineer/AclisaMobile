@@ -14,7 +14,9 @@ namespace HorusMobile.Models
         public string asunto { get; set; }
         public bool estado { get; set; }
         public string mensaje { get; set; }
+        public string link { get; set; }
         public string message { get; set; }
         public string error { get; set; }
+        public string fechaUltimoEnvio { get; set; }
     }
 }

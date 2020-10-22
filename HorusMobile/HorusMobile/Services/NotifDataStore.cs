@@ -107,7 +107,7 @@ namespace HorusMobile.Services
                 */
                 //json = (JObject)json["Respuesta"]["data"]["msjCuerpos"];
                 Debug.WriteLine("********NOTIFICACIONES*******");
-                Debug.WriteLine(json["Respuesta"]["data"]["msjCuerpos"]);
+                //Debug.WriteLine(json["Respuesta"]["data"]["msjCuerpos"]);
 
                 var j = JArray.Parse(json["Respuesta"]["data"]["msjCuerpos"].ToString());
                 //var notificaciones = j;
@@ -127,8 +127,13 @@ namespace HorusMobile.Services
                             Text = Notif.asunto,
                             Description = Notif.mensaje,
                             id_cuerpo = Notif.id,
+                            Link = Notif.link,
+                            FechaEnviado = Notif.fechaUltimoEnvio,
+                            TituloFormateado = string.Format("{0} - {1}", Notif.fechaUltimoEnvio, Notif.asunto),
                             estado = Notif.estado ? 1 : 0 //int.Parse(Notif.estado);
+                            
                         };
+                        Debug.WriteLine(string.Format("{0} - {1}", Notif.fechaUltimoEnvio, Notif.asunto));
                         itemsRetornados.Add(objeto);
                     }
                 }
@@ -148,6 +153,11 @@ namespace HorusMobile.Services
         private Task DisplayAlert(string v1, string v2, string v3)
         {
             throw new NotImplementedException();
+        }
+
+        public string TituloFormateado(string s1, string s2)
+        {
+            return string.Format("{0} - {1}", s1, s2);
         }
     }
 }

@@ -2,6 +2,7 @@
 using HorusMobile.ViewModels;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -28,7 +29,10 @@ namespace HorusMobile.Views
             var item = new Item
             {
                 Text = "Título de notificación 1",
-                Description = "Ejemplo de cuerpo de notificación."
+                Description = "Ejemplo de cuerpo de notificación.",
+                FechaEnviado = "2020-09-15 10:18:00",
+                TituloFormateado = "2020-09-15 10:18:00 Título de notificación 1",
+                Link = "www.google.com"
             };
 
             viewModel = new ItemDetailViewModel(item);
@@ -39,8 +43,9 @@ namespace HorusMobile.Views
         {
             string user = App.Current.Properties["_user_login"].ToString();
             string pass = App.Current.Properties["_user_pass"].ToString();
-            //http://192.168.50.98/intermedio/funciones/
-            await Browser.OpenAsync("http://www.google.com", BrowserLaunchMode.SystemPreferred);
+            string link = labelLink.Text;
+            Debug.WriteLine("Linkurl: " + link);
+            await Browser.OpenAsync(link, BrowserLaunchMode.SystemPreferred);
         }
     }
 }

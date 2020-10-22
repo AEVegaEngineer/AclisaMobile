@@ -21,6 +21,7 @@
             <Label Text="{Binding Item.Text}" d:Text="Asunto" FontSize="Large" FontAttributes="Bold" TextColor="#FFFFFF"/>
             <Label Text="Descripción:" FontSize="Medium"  TextColor="#FFFFFF"/>
             <Label Text="{Binding Item.Description}" d:Text="Descripción" FontSize="Medium" TextColor="#FFFFFF"/>
+            <Label x:Name="labelLink" Text="{Binding Item.Link}" IsVisible="false"/>
             <Button Text="Ver más información" BackgroundColor="White" BorderRadius="20" FontSize="Medium" TextColor="#4163a2" Clicked="VerMasInfoHorusTapped"></Button>            
         </StackLayout>
     </Grid>    
